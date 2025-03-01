@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 
 run: ## Run the app using uvicorn
-	python -m poetry run uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+	python -m poetry run uvicorn main:app --host 0.0.0.0 --port 8000 --reload --env-file .local.env
 
 install: ## Install a dependency using poetry
 	@echo "Installing dependency $(LIBRARY)"
