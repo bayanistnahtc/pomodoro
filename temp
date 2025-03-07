@@ -1,4 +1,0 @@
-python -m poetry run uvicorn main:app
-mingw32-make --version
-mingw32-make install LIBRARY=pydantic
-mingw32-make run
