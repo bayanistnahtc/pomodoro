@@ -5,7 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from database.models import Base
+from database import Base
+from models import *
 from settings import Settings
 
 settings = Settings()
@@ -56,7 +57,6 @@ def run_migrations_offline() -> None:
     with context.begin_transaction():
         context.run_migrations()
 
-postgresql+psycopg2://postgres:password@localhost:5432/pomodoro
 
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
