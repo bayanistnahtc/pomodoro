@@ -6,6 +6,7 @@ from sqlalchemy.orm import (
     declared_attr,
     mapped_column
 )
+from sqlalchemy.schema import ForeignKey
 
 
 class Base(DeclarativeBase):
@@ -26,7 +27,7 @@ class Tasks(Base):
     name: Mapped[str]
     pomodoro_count: Mapped[int]
     category_id: Mapped[int]
-    user_id: Mapped[Optional[int]]
+    user_id: Mapped[int] = mapped_column(ForeignKey("UserProfile.id"), nullable=False)
 
 
 class Categories(Base):

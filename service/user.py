@@ -1,24 +1,19 @@
-import string
-from random import choice
 from dataclasses import dataclass
 
 from repository import UserRepository
+from service.auth import AuthService
 from schema import UserLoginSchema
 
 
 @dataclass
 class UserService:
     user_repository: UserRepository
+    auth_service: AuthService
 
     def create_user(self, username: str, password: str) -> UserLoginSchema:
-        access_token = self._generate_access_token()
         user = self.user_repository.create_user(
             username=username,
-            password=password,
-            access_token=access_token
+            password=password
         )
-        return UserLoginSchema(user_id=user.id, access_token=user.access_token)
-
-    def _generate_access_token(self) -> str:
-        return ''.join(choice(string.ascii_uppercase + string.digits)
-                       for _ in range(10))
+        access_token = self.auth_service.generate_access_token(user_id=user.id)
+        return UserLoginSchema(user_id=user.id, access_token=access_token)
