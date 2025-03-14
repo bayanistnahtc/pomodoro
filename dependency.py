@@ -7,6 +7,7 @@ from fastapi import (
 from sqlalchemy.orm import Session
 
 from cache import get_redis_connection
+from client import GoogleClient, YandexClient
 from database import get_db_session
 from exception import TokenExpired,  TokenNotCorrectError
 from repository import TaskCache, TaskRepository, UserRepository
@@ -41,10 +42,25 @@ def get_user_repository(
     return UserRepository(db_session=db_session)
 
 
+def get_google_client() -> GoogleClient:
+    return GoogleClient(settings=Settings())
+
+
+def get_yandex_client() -> YandexClient:
+    return YandexClient(settings=Settings())
+
+
 def get_auth_service(
-        user_repository: UserRepository = Depends(get_user_repository)
+        user_repository: UserRepository = Depends(get_user_repository),
+        google_client: GoogleClient = Depends(get_google_client),
+        yandex_client: YandexClient = Depends(get_yandex_client)
 ) -> AuthService:
-    return AuthService(user_repository=user_repository, settings=Settings())
+    return AuthService(
+        user_repository=user_repository,
+        settings=Settings(),
+        google_client=google_client,
+        yandex_client=yandex_client
+    )
 
 
 def get_user_service(
@@ -67,7 +83,6 @@ def get_request_user_id(
 ) -> int:
     try:
         user_id = auth_service.get_user_id_from_access_token(token.credentials)
-        print(f"I am in 'get_request_user_id': {user_id}")
     except TokenExpired as e:
         raise HTTPException(
             status_code=401,
