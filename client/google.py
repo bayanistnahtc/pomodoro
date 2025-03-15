@@ -13,12 +13,11 @@ class GoogleClient:
 
     async def get_user_info(self, code: str) -> GoogleUserData:
         access_token = await self._get_access_token(code=code)
-        print(f"A: {access_token}")
-        async with self.async_client as client:
-            user_info = await client.get(
+        user_info = await self.async_client.get(
                 url=self.settings.GOOGLE_USER_INFO_URL,
                 headers={"Authorization": f"Bearer {access_token}"}
             )
+        print(f"user_info: {user_info.json()}")
         return GoogleUserData(**user_info.json(), access_token=access_token)
 
     async def _get_access_token(self, code: str) -> str:
@@ -29,8 +28,7 @@ class GoogleClient:
             "redirect_uri": self.settings.GOOGLE_REDIRECT_URI,
             "grant_type": "authorization_code"
         }
-        async with self.async_client as client:
-            response = await client.post(
+        response = await self.async_client.post(
                 url=self.settings.GOOGLE_TOKEN_URL,
                 data=data
             )

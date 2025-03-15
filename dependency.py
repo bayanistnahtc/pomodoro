@@ -44,7 +44,9 @@ async def get_user_repository(
 
 
 async def get_async_client() -> httpx.AsyncClient:
-    return httpx.AsyncClient()
+    # return httpx.AsyncClient()
+    async with httpx.AsyncClient() as client:
+        yield client
 
 
 async def get_google_client(

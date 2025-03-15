@@ -14,8 +14,7 @@ class YandexClient:
     async def get_user_info(self, code: str) -> YandexUserData:
         access_token = await self._get_access_token(code=code)
 
-        async with self.async_client as client:
-            user_info = await client.get(
+        user_info = await self.async_client.get(
                 url=self.settings.YANDEX_USER_INFO_URL,
                 headers={"Authorization": f"OAuth {access_token}"}
             )
@@ -32,8 +31,7 @@ class YandexClient:
         headers = {
             "Content-Type": "application/x-www-form-urlencoded"
         }
-        async with self.async_client as client:
-            response = await client.post(
+        response = await self.async_client.post(
                 url=self.settings.YANDEX_TOKEN_URL,
                 data=data,
                 headers=headers
