@@ -53,6 +53,7 @@ cover/
 
 # Environments
 .venv
+venv
 .local.env
 
 # IDEs

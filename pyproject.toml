@@ -1,7 +1,7 @@
 [project]
 name = "pomodorro-poetry"
 version = "0.1.0"
-description = ""
+description = "Pomodoro"
 authors = [
     {name = "bayanistnahtc",email = "bayanistnahtc@gmail.com"}
 ]
@@ -21,6 +21,7 @@ dependencies = [
     "httpx (>=0.28.1,<0.29.0)",
     "asyncpg (>=0.30.0,<0.31.0)",
     "greenlet (>=3.1.1,<4.0.0)",
+    "gunicorn (>=23.0.0,<24.0.0)",
 ]
 
 [tool.poetry]
