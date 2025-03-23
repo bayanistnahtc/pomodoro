@@ -58,7 +58,7 @@ class TaskRepository:
         async with self.db_session as session:
             task_id: int = (await session.execute(query)).scalar_one_or_none()
             await session.commit()
-            return self.get_task(task_id)
+            return await self.get_task(task_id)
 
     async def get_user_task(self, user_id: int, task_id: int) -> Tasks | None:
         query = select(Tasks).\

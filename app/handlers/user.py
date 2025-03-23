@@ -2,9 +2,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from dependency import get_user_service
-from schema import UserCreateSchema, UserLoginSchema
-from service import UserService
+from app.dependency import get_user_service
+from app.schema import UserCreateSchema, UserLoginSchema
+from app.service import UserService
 
 
 router = APIRouter(prefix="/user", tags=["user"])
