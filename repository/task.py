@@ -1,12 +1,12 @@
 from sqlalchemy import delete, select, update
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from models import Categories, Tasks
 from schema.task import TaskCreateSchema
 
 
 class TaskRepository:
-    def __init__(self, db_session: Session):
+    def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
 
     def get_tasks(self) -> list[Tasks]:
